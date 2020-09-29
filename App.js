@@ -11,6 +11,7 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from 'react-redux'
+import FlashMessage from 'react-native-flash-message'
 import {
   SplashScreen, LoginScreen, RegisterScreen, HomeScreen,
 } from './src/screens'
@@ -34,6 +35,7 @@ const App = () => {
           <Stack.Screen name={SCREEN_NAME.HomeScreen} component={HomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
+      <FlashMessage position="top" />
     </Provider>
   )
 }
