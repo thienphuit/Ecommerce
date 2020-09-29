@@ -10,7 +10,7 @@ const SplashScreen = (props) => {
   useEffect(() => {
     SplashScreenLib.hide()
     if (!user?.token) {
-      navigation.navigate(SCREEN_NAME.LoginScreen)
+      navigation.replace(SCREEN_NAME.LoginScreen)
       return
     }
     navigation.replace(SCREEN_NAME.HomeScreen)

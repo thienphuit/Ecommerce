@@ -26,7 +26,7 @@ const LoginScreen = (props) => {
       email,
       password,
     }))
-    navigation.navigate(SCREEN_NAME.HomeScreen)
+    navigation.replace(SCREEN_NAME.HomeScreen)
   }
   const handleInput = (func, text) => {
     func(text)

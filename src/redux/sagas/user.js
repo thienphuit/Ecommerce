@@ -23,20 +23,27 @@ function* loginUser(action) {
   }
 }
 function* registerUser(action) {
+  const { callback } = action?.payload
+  console.tron.log({ action })
   try {
     const response = yield call(() => axios.post(`${API_URL}/user/register`, {
       fullname: action?.payload?.data?.fullname,
       email: action?.payload?.data?.email,
       password: action?.payload?.data?.password,
     }))
-    yield put({
-      type: userTypes.REGISTER_USER_SUCCESS,
-      payload: { data: response.data },
-    })
+    // yield put({
+    //   type: userTypes.REGISTER_USER_SUCCESS,
+    //   payload: { data: response.data },
+    // })
+    callback(response)
   } catch (error) {
-    yield put({
-      type: userTypes.REGISTER_USER_FAIL,
-      payload: { error: error.message },
+    // yield put({
+    //   type: userTypes.REGISTER_USER_FAIL,
+    //   payload: { error: error.message },
+    // })
+    callback({
+      success: false,
+      message: error?.message,
     })
   }
 }

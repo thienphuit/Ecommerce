@@ -3,6 +3,7 @@ import {
   View, StyleSheet, SafeAreaView, Image, Dimensions, TouchableOpacity, ScrollView, Alert,
 } from 'react-native'
 import { useDispatch } from 'react-redux'
+import { showMessage, hideMessage } from 'react-native-flash-message'
 import { userAction } from '../../redux/actions'
 import { Text, Button, Input } from '../../components'
 import {
@@ -17,26 +18,50 @@ const { width } = Dimensions.get('window')
 
 const RegisterScreen = (props) => {
   const { navigation } = props
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordAgain, setPasswordAgain] = useState('')
+  const [fullName, setFullName] = useState('thien123')
+  const [email, setEmail] = useState('b@gmail.com')
+  const [password, setPassword] = useState('123456')
+  const [passwordAgain, setPasswordAgain] = useState('123456')
   const handleTextInput = (func, text) => {
     func(text)
   }
   const dispatch = useDispatch()
+  const validateEmail = (emailTest) => {
+    if (!emailTest.length) {
+      return false
+    }
+    const re = /^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/
+    return re.test(String(emailTest).toLowerCase())
+  }
   const handleRegister = () => {
     if (password !== passwordAgain) {
       Alert.alert('Pass sai nha')
       return
     }
+    // if (!validateEmail(email)) {
+    //   showMessage({
+    //     message: 'email khong dung vui long nhap lai',
+    //     type: 'danger',
+    //     // type: "danger",
+    //   })
+    //   return
+    // }
     dispatch(userAction.regiserUser({
       fullname: fullName,
       email,
       password,
+    }, (response) => {
+      if (response.success === false) {
+        Alert.alert('Register fail')
+        return
+      }
+      showMessage({
+        message: 'Register thanh cong',
+        type: 'danger',
+        // type: "danger",
+      })
+      navigation.navigate(SCREEN_NAME.LoginScreen)
     }))
-    Alert.alert('Register success')
-    navigation.navigate(SCREEN_NAME.LoginScreen)
   }
   return (
     <ScrollView>
