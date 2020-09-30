@@ -17,13 +17,14 @@ import {
 } from './src/screens'
 import { SCREEN_NAME } from './src/configs'
 import store from './src/redux/store'
+import { navigationRef } from './src/utils/NavigationHelpers'
 
 const Stack = createStackNavigator()
 
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Stack.Navigator
           screenOptions={{
             headerShown: false,

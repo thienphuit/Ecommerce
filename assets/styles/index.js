@@ -124,7 +124,18 @@ const TypoGrayphy = {
   },
 
 }
-
+const MessageStyle = {
+  success: {
+    style: { backgroundColor: Colors.primaryBlue },
+    titleStyle: TypoGrayphy.TybodyMediumTextBold,
+    duration: 3000,
+  },
+  error: {
+    style: { backgroundColor: Colors.primaryRed },
+    titleStyle: TypoGrayphy.bodyMediumTextBold,
+    duration: 3000,
+  },
+}
 export {
-  Colors, TypoGrayphy, Fonts,
+  Colors, TypoGrayphy, Fonts, MessageStyle,
 }
