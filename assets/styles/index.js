@@ -124,6 +124,18 @@ const TypoGrayphy = {
   },
 
 }
+const Shadows = {
+  buttonShadow: {
+    shadowColor: Colors.primaryRed,
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.24,
+    shadowRadius: 30,
+    elevation: 8,
+  },
+}
 const MessageStyle = {
   success: {
     style: { backgroundColor: Colors.primaryBlue },
@@ -137,5 +149,5 @@ const MessageStyle = {
   },
 }
 export {
-  Colors, TypoGrayphy, Fonts, MessageStyle,
+  Colors, TypoGrayphy, Fonts, MessageStyle, Shadows,
 }

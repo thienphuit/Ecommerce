@@ -26,13 +26,7 @@ const RegisterScreen = (props) => {
     func(text)
   }
   const dispatch = useDispatch()
-  const validateEmail = (emailTest) => {
-    if (!emailTest.length) {
-      return false
-    }
-    const re = /^(([^<>()[]\.,;:\s@"]+(.[^<>()[]\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/
-    return re.test(String(emailTest).toLowerCase())
-  }
+
   const handleRegister = () => {
     if (password !== passwordAgain) {
       Alert.alert('Pass sai nha')

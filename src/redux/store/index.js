@@ -28,5 +28,6 @@ const composeEnhancers = compose
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const store = createStore(persistedReducer, composeEnhancers(Reactotron.createEnhancer(), applyMiddleware(sagaMiddleware)))
 sagaMiddleware.run(rootSaga)
-persistStore(store).purge()
+persistStore(store)
+// purge()
 export default store

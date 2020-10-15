@@ -3,7 +3,7 @@ import { userTypes } from '../types'
 
 const initState = {
   token: '',
-  infoUser: {},
+  profileUser: {},
   message: '',
 }
 
@@ -21,6 +21,8 @@ const userReducer = (state = initState, action) => {
       return {
         ...state, message: error,
       }
+    case userTypes.PROFILE_USER_SUCCESS:
+      return { ...state, profileUser: action.payload.data }
     default:
       return state
   }

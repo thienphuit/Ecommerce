@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import {
-  View, StyleSheet, SafeAreaView, Image, TextInput, Dimensions, TouchableOpacity, ScrollView, Alert,
+  View, StyleSheet, SafeAreaView, Image, TextInput, Dimensions, TouchableOpacity, ScrollView,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { showMessage } from 'react-native-flash-message'
+// import { showMessage } from 'react-native-flash-message'
 import { Text, Button } from '../../components'
 import {
   logoWhite, message, iconGoogle, iconFB,
@@ -11,7 +11,7 @@ import {
 import {
   TypoGrayphy, mainPaddingH, Colors, calWidth,
 } from '../../../assets/styles'
-import { userAction } from '../../redux/actions'
+import { userAction, productAction, categoriesAction } from '../../redux/actions'
 import { SCREEN_NAME } from '../../configs'
 import { Helpers, NavigationHelpers } from '../../utils'
 
@@ -29,17 +29,23 @@ const LoginScreen = (props) => {
       email,
       password,
     }, (response) => {
-      if (response?.success) {
+      const { success, data } = response
+      const { token } = data
+      if (success) {
         // navigation.replace(SCREEN_NAME.HomeScreen)
-        NavigationHelpers.navigateReplace(SCREEN_NAME.HomeScreen)
+        dispath(categoriesAction.getCategories({ token: user?.token }, (respose) => {
+        }))
+        dispath(productAction.getProduct({ token }, () => {
+          // console.log('============================')
+          // console.log('response', res)
+          // console.log('============================')
+        }))
+        NavigationHelpers.navigateToScreenInTab(SCREEN_NAME.HomeScreen)
       } else {
         // Alert.alert(response.message)
         // setShowMessage(response.message)
         Helpers.showMes(response.message)
       }
-      console.log('============================')
-      console.log('messs', response.message)
-      console.log('============================')
     }))
   }
   const handleInput = (func, text) => {

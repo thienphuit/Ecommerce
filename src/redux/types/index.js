@@ -1,5 +1,8 @@
 import * as userTypes from './user'
+import * as productTypes from './product'
+import * as cartTypes from './cart'
+import * as categoriesTypes from './categories'
 
 export {
-  userTypes,
+  userTypes, productTypes, cartTypes, categoriesTypes,
 }
