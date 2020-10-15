@@ -13,3 +13,16 @@ export const loginUser = (data, callback) => {
 
   }
 }
+export const profileUser = (data, callback) => {
+  return {
+    type: userTypes.PROFILE_USER,
+    payload: { data, callback },
+
+  }
+}
+export const updateProfileUser = (data, callback) => {
+  return {
+    type: userTypes.PROFILE_USER_UPDATE,
+    payload: { data, callback },
+  }
+}

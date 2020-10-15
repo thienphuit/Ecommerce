@@ -3,6 +3,7 @@ import {
   View, StyleSheet, SafeAreaView, Image, TextInput, Dimensions, TouchableOpacity, ScrollView,
 } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+// import { showMessage } from 'react-native-flash-message'
 import { Text, Button } from '../../components'
 import {
   logoWhite, message, iconGoogle, iconFB,
@@ -10,13 +11,15 @@ import {
 import {
   TypoGrayphy, mainPaddingH, Colors, calWidth,
 } from '../../../assets/styles'
-import { userAction } from '../../redux/actions'
+import { userAction, productAction, categoriesAction } from '../../redux/actions'
 import { SCREEN_NAME } from '../../configs'
+import { Helpers, NavigationHelpers } from '../../utils'
 
 const { width } = Dimensions.get('window')
 
 const LoginScreen = (props) => {
   const { navigation } = props
+  const [showMessage, setShowMessage] = useState('')
   const dispath = useDispatch()
   const user = useSelector((state) => state.user)
   const [email, setEmail] = useState('bot1@gmail.com')
@@ -25,8 +28,25 @@ const LoginScreen = (props) => {
     dispath(userAction.loginUser({
       email,
       password,
+    }, (response) => {
+      const { success, data } = response
+      const { token } = data
+      if (success) {
+        // navigation.replace(SCREEN_NAME.HomeScreen)
+        dispath(categoriesAction.getCategories({ token: user?.token }, (respose) => {
+        }))
+        dispath(productAction.getProduct({ token }, () => {
+          // console.log('============================')
+          // console.log('response', res)
+          // console.log('============================')
+        }))
+        NavigationHelpers.navigateToScreenInTab(SCREEN_NAME.HomeScreen)
+      } else {
+        // Alert.alert(response.message)
+        // setShowMessage(response.message)
+        Helpers.showMes(response.message)
+      }
     }))
-    navigation.replace(SCREEN_NAME.HomeScreen)
   }
   const handleInput = (func, text) => {
     func(text)
@@ -52,7 +72,7 @@ const LoginScreen = (props) => {
             />
             <TextInput placeholder="Your Email" onChangeText={(text) => handleInput(setEmail, text)} />
           </View>
-          <View style={[styles.viewInput, { marginTop: 8 * calWidth }]}>
+          <View style={[styles.viewInput, { marginTop: 8 * calWidth, borderColor: showMessage && showMessage ? Colors.primaryRed : Colors.neutralLine }]}>
             <Image
               source={message}
               style={styles.imageLogin}
@@ -60,6 +80,7 @@ const LoginScreen = (props) => {
             />
             <TextInput placeholder="Your Passwork" onChangeText={(text) => handleInput(setPassword, text)} />
           </View>
+          {showMessage && showMessage ? <Text style={{ color: 'red' }}>{showMessage}</Text> : null}
           <View style={styles.viewButton}>
             <Button name="Sign In" handleClick={handleLogin} />
           </View>
@@ -152,9 +173,9 @@ const styles = StyleSheet.create({
     borderRadius: 5 * calWidth,
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: Colors.neutralLine,
     borderWidth: StyleSheet.hairlineWidth,
     padding: 12 * calWidth,
+    borderColor: Colors.neutralLine,
   },
   viewHeader: {
     marginTop: 28 * calWidth,
